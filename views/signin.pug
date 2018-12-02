@@ -1,0 +1,90 @@
+doctype strict
+html(xmlns='http://www.w3.org/1999/xhtml')
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    title ForS24
+    meta(name='keywords', content='')
+    meta(name='description', content='')
+    link(href='http://fonts.googleapis.com/css?family=Chivo:400,900', rel='stylesheet')
+    link(rel='stylesheet', href='/stylesheets/default.css')
+    link(rel='stylesheet', href='/stylesheets/fonts.css')
+    script.
+      function check(){
+        if(loginform.id.value==""){
+          alert("ID을 입력해 주세요!")
+          login.id.focus()
+          return
+        }
+        if(login.pwd.value==""){
+          alert("비밀번호를 입력해 주세요!")
+          login.pwd.focus()
+          return
+        }
+        login.submit()
+      }
+
+  body
+    #wrapper
+      #header-wrapper
+        #header.container
+          #logo
+            h1
+              a(href='/') ForS
+            h1#two
+              a(href='‪/') 2
+            h1#four
+              a(href='/') 4
+      #menu-wrapper
+        #menu.container
+          ul
+            li
+              a(href='/event') 행사상품
+            li
+              a(href='/price') 장바구니
+            li
+              a(href='/search') 편의점 위치
+            li
+              a(href='/explain') 홈페이지 설명
+      #recommendedProduct
+        p#exp1 ForS24추천상품
+        p#exp2 ForS24가 추천해주는 이번 달 상품!
+        ul
+          li.box
+            p.productImg
+              img(src='http://gs25appimg.gsretail.com/imgsvr/item/GD_8809329050015_016.jpg')
+            p.productName  천지개벽)숙취해소음료 
+            p.productPrice  5,000원 
+          li.box
+            p.productImg
+              img(src='http://gs25appimg.gsretail.com/imgsvr/item/GD_8809443210548_001.jpg')
+            p.productName  Y)디즈니썸썸카페베네
+            p.productPrice  2,900원 
+          li.box
+            p.productImg
+              img(src='http://gs25appimg.gsretail.com/imgsvr/item/GD_8801207154273_002.jpg')
+            p.productName  롯데)가나초콜릿밀크 
+            p.productPrice  1,200원 
+          li.box
+            p.productImg
+              img(src='http://gs25appimg.gsretail.com/imgsvr/item/GD_8809355827544_001.jpg')
+            p.productName  머스트블랙마스크 
+            p.productPrice  2,500원 
+      #login
+        form(action='\signin', method='POST', name='loginform')
+          table(border='0')
+            tr
+              td(align='right') ID
+              | 								
+              td
+                input(type='text', name='id', placeholder='아이디 입력')
+            | 							
+            tr
+              td PW
+              | 								
+              td
+                  input(type='password', name='pwd', placeholder='비밀번호 입력')
+            | 							
+            tr
+              td(colspan='2')
+                input(type='submit', value='로그아웃', onclick='check()')
+                | 								

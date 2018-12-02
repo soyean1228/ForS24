@@ -1,0 +1,16 @@
+db.carts.insert([
+    {
+       "cart_name": "emart",
+       "cart_price": 0,
+       "discount_price": 0,
+       "id": "chsy",
+       "product": [ {"name" : "aa", "num" : 1 }, {"name" : "bb", "num" : 2 }]
+    },
+    {
+        "cart_name": "GS25",
+        "cart_price": 0,
+        "discount_price": 0,
+        "id": "abc",
+        "product": [ {"name" : "aaa", "num" : 3 }, {"name" : "bbb", "num" : 4 }]
+     }
+])

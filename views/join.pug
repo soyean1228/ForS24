@@ -1,0 +1,81 @@
+doctype strict
+html(xmlns='http://www.w3.org/1999/xhtml')
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    title 회원가입
+    meta(name='keywords', content='')
+    meta(name='description', content='')
+    link(href='http://fonts.googleapis.com/css?family=Chivo:400,900', rel='stylesheet')
+    link(rel='stylesheet', href='/stylesheets/default.css')
+    link(rel='stylesheet', href='/stylesheets/fonts.css')
+  script.
+      function jcheck(){
+        if(joinform.id.value==""){
+          alert("ID을 입력해 주세요!")
+          joinform.id.focus()
+          return
+        }
+        if(joinform.pwd.value==""){
+          alert("비밀번호를 입력해 주세요!")
+         joinform.pwd.focus()
+          return
+        }
+        if(joinform.name.value==""){
+          alert("이름을 입력해 주세요!")
+         joinform.name.focus()
+          return
+        }
+        if(joinform.email.value==""){
+          alert("이메일을 입력해 주세요!")
+         joinform.email.focus()
+          return
+        }
+        join.submit()
+      }
+  body
+    #wrapper
+      #header-wrapper
+        #header.container
+          #logo
+            h1
+              a(href='/') ForS
+            h1#two
+              a(href='‪/') 2
+            h1#four
+              a(href='/') 4
+      #menu-wrapper
+        #menu.container
+          ul
+            // <li class="current_page_item"><a href="#">Homepage</a></li>
+            li
+              a(href='/event') 행사상품
+            li
+              a(href='/price') 장바구니
+            li
+              a(href='/search') 편의점 위치
+            li
+              a(href='/explain') 홈페이지 설명
+      #join-table
+      form(action='/join/signup', method='POST', name = 'joinform')
+        table(class="join", align='right',  style="position:absolute; left:500px; top:200px; width:164px; height:104px;")
+          tbody
+            tr
+              th ID
+              td
+                input(type='text', name='id')
+            tr
+              th Password
+              td
+                input(type='password', name='pwd')
+            tr
+              th 이름
+              td
+                input(type='text', name='name')
+            tr
+              th 이메일
+              td
+                input(type='text', name='email')
+            tr(align='center')
+                td(colspan="2")
+                  input(type='submit', value='가입', onclick='jcheck()')
+                  input(type='reset', value='취소')

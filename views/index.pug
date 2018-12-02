@@ -1,0 +1,109 @@
+doctype strict
+html(xmlns='http://www.w3.org/1999/xhtml')
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    title ForS24
+    meta(name='keywords', content='')
+    meta(name='description', content='')
+
+
+    link(rel='stylesheet', href='/stylesheets/default.css')
+    link(rel='stylesheet', href='/stylesheets/fonts.css')
+
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css', integrity='sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB', crossorigin='anonymous')
+    //- link(rel='stylesheet', href='/stylesheets/bootstrap.min.css', crossorigin='anonymous')
+    //- link(href='http://fonts.googleapis.com/css?family=Chivo:400,900', rel='stylesheet')
+
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js', integrity='sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T', crossorigin='anonymous')
+
+
+    script.
+      function check(){
+        if(loginform.uid.value==""){
+          alert("ID을 입력해 주세요!")
+          login.uid.focus()
+          return
+        }
+        if(loginform.password.value==""){
+          alert("비밀번호를 입력해 주세요!")
+          loginform.password.focus()
+          return
+        }
+        login.submit()
+      }
+  body
+    if flashMessages
+      each texts, type in flashMessages
+        .container.fixed-top.mt-5
+          .alert.alert-dismissible.fade.show(class=`alert-${type}`)
+            each msg in texts
+              | #{msg} 
+            button.close(type='button', data-dismiss='alert', aria-label='close')
+              span(aria-hidden='true') &times;
+
+      #wrapper
+        #header-wrapper
+          #header.container
+            #logo
+              h1
+                a(href='/') ForS
+              h1#two
+                a(href='‪/') 2
+              h1#four
+                a(href='/') 4
+
+      #menu-wrapper
+        #menu.container
+          ul
+            li
+              a(href='/event') 행사상품
+            li
+              a(href='/price') 장바구니
+            li
+              a(href='/search') 편의점 위치
+            li
+              a(href='/explain') 홈페이지 설명
+      #recommendedProduct
+        p#exp1  ForS
+        p#two  2
+        p#four 4
+        p#recommend 추천상품
+
+      #recommendedProduct2
+        p#exp2 ForS24가 추천해주는 이번 달 행사상품!
+          img(src='images/total.png' width="900" height="500")
+
+          
+      if (!currentUser)
+        #login
+          form(action='/signin', method='POST', name='loginform', style="position:absolute; left:900px; top:230px; width:164px; height:104px;")
+            table(border='0')
+              tr
+                td(align='right') ID
+                |                         
+                td
+                  input(type='text', name='uid', placeholder='아이디 입력')
+              |                      
+              tr
+                td PW
+                |                         
+                td
+                    input(type='password', name='password', placeholder='비밀번호 입력')
+              |                      
+              tr
+                td(colspan='2')
+                  input(type='submit', value='로그인', onclick='check()')
+                  |                         
+                  a(href='\join') 회원가입
+      else 
+       #login
+        div(class='signout', style="position:absolute; left:900px; top:235px; width:164px; height:104px;")
+          h3  ForS에 오신 것을 환영합니다!
+        form(action="/signout" method='GET')
+          input( type="submit" value="로그아웃" style="position:absolute; left:946px; top:315px;")
+        form(action='signout.html', method='GET')
+        
+            
+

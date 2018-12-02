@@ -1,0 +1,184 @@
+doctype strict
+html(xmlns='http://www.w3.org/1999/xhtml')
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    title ForS24
+    meta(name='keywords', content='')
+    meta(name='description', content='')
+    link(href='http://fonts.googleapis.com/css?family=Chivo:400,900', rel='stylesheet')
+    link(rel='stylesheet', href='/stylesheets/default.css')
+    link(rel='stylesheet', href='/stylesheets/fonts.css')
+  body
+    #wrapper
+      #header-wrapper
+        #header.container
+          #logo
+            h1
+              a(href='/') ForS
+            h1#two
+              a(href='/') 2
+            h1#four
+              a(href='/') 4
+      #menu-wrapper
+        #menu.container
+          ul
+            li
+              a(href='/event') 행사상품
+            li
+              a(href='/price') 장바구니
+            li
+              a(href='/search') 편의점 위치
+            li
+              a(href='/explain') 홈페이지 설명
+
+    // 편의점 별 선택 카테고리
+    #priceBanner
+      ul
+        li.emart 
+          a(href='/price/emart') 이마트에브리데이
+        li.gs25 
+          a(href='/price/GS25') GS25
+        li.sevenEleven 
+          a(href='/price/seveneleven') 세븐일레븐
+        li.cart 
+          a(href='/cart') 장바구니
+
+    // 이마트에브리데이 장바구니
+    #emart_cart
+      h1#emart 이마트에브리데이
+      h2  장바구니 목록
+      br
+      table(border='1', style='height: 300px; width: 1000px; margin: 0px 0pt 0pt 130px;')
+        thead
+          tr(align='center')
+            //- th
+            //-   input(type='checkbox', name='all', value='all')
+            //-   | 전체 선택
+            th 상품 사진
+            th 상품명
+            th 수량
+            th 가격
+            th 취소
+        tbody
+          each p in prod_emart        
+            tr(align='center')
+              td.pro_image <img src=  #{p.p_image}>
+              td 
+                p.productName #{p.p_name} 
+              td 
+                 p.productPrice #{p.p_num}
+              td 
+                p.productPrice #{p.p_price}
+              td
+                form(action= `/cart/${p.p_name}/${p.p_brand}?_method=POST`, name='datalist', method='POST')
+                  input(type='submit' value= '삭제')
+          tr
+            th(colspan='6') 
+              p.productPrice 총 상품 가격: #{total_price_emart}원
+          tr
+            form(action=`/cart/sale_emart`, name='membership_select', method='POST')
+              th(colspan='6')
+                select(name='card')
+                  option() 할인카드없음
+                select(name='membership')
+                  option() 멤버쉽선택
+                  option(value='kt') KT멤버쉽
+                  input(type='submit' value='선택')
+                  |         할인 적용 가격: #{discount_emart}원
+    // gs35 장바구니
+    br
+    br
+    #GS25_cart
+      h1#GS25 GS25
+      h2  장바구니 목록
+      br
+      table(border='1', style='height: 300px; width: 1000px; margin: 0px 0pt 0pt 130px;')
+        thead
+          tr(align='center')
+            //- th
+            //-   input(type='checkbox', name='all', value='all')
+            //-   | 전체 선택
+            th 상품 사진
+            th 상품명
+            th 수량
+            th 가격
+            th 취소
+        tbody
+          each p in prod_gs
+            tr(align='center')
+              td.pro_image <img src=  #{p.p_image}>
+              td 
+                p.productName #{p.p_name} 
+              td 
+                 p.productPrice #{p.p_num}
+              td 
+                p.productPrice #{p.p_price}
+              td
+                form(action= `/cart/${p.p_name}/${p.p_brand}?_method=POST`, name='datalist', method='POST')
+                  input(type='submit' value= '삭제')
+          tr
+            th(colspan='6') 
+              p.productPrice 총 상품 가격: #{total_price_gs}원
+          tr
+            form(action=`/cart/sale_gs`, name='membership_select', method='POST')
+              th(colspan='6')
+                select(name='card')
+                    option() 카드선택
+                    option(value='Mr.Life') 신한카드 Mr.Life
+                    option(value='taptapO') 삼성 taptapO
+                    option(value='kia') 기아레드멤버스
+                    option(value='happy') 해피포인트
+                select(name='membership')
+                  option() 멤버쉽선택
+                  option(value='lg') LG
+                  option(value='u+') U+
+                  option(value='kt') KT
+                  input(type='submit' value='선택')
+                |           할인 적용 가격:#{discount_gs}원
+    // 세븐일레븐 장바구니
+    br
+    br
+    #sevenEleven_cart
+      h1#sevenEleven sevenEleven
+      h2  장바구니 목록
+      br
+      table(border='1', style='height: 300px; width: 1000px; margin: 0px 0pt 0pt 130px;')
+        thead
+          tr(align='center')
+            //- th
+            //-   input(type='checkbox', name='all', value='all')
+            //-   | 전체 선택
+            th 상품 사진
+            th 상품명
+            th 수량
+            th 가격
+            th 취소
+        tbody
+          each p in prod_seveneleven
+            tr(align='center')
+              td.pro_image <img src=  #{p.p_image}>
+              td 
+                p.productName #{p.p_name} 
+              td 
+                 p.productPrice #{p.p_num}
+              td 
+                p.productPrice #{p.p_price}
+              td
+                form(action= `/cart/${p.p_name}/${p.p_brand}?_method=POST`, name='datalist', method='POST')
+                  input(type='submit' value= '삭제')
+          tr
+            th(colspan='6') 
+              p.productPrice 총 상품 가격: #{total_price_eleven}원
+          tr
+            form(action=`/cart/sale_eleven`, name='membership_select', method='POST')
+              th(colspan='6')
+                select(name='card')
+                  option() 카드선택
+                  option(value='Mr.Life') 신한카드 Mr.Life
+                  option(value='taptapO') 삼성 taptapO
+                  option(value='seven_lotte') 세븐일레븐 멤버쉽 롯데
+                select(name='membership')
+                  option() 멤버쉽선택
+                  option(value='t') T 멤버쉽
+                  input(type='submit' value='선택')
+                |           할인 적용 가격:#{discount_eleven}원

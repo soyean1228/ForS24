@@ -1,0 +1,58 @@
+doctype strict
+html(xmlns='http://www.w3.org/1999/xhtml')
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    title ForS24
+    meta(name='keywords', content='')
+    meta(name='description', content='')
+    link(href='http://fonts.googleapis.com/css?family=Chivo:400,900', rel='stylesheet')
+    link(rel='stylesheet', href='/stylesheets/default.css')
+    link(rel='stylesheet', href='/stylesheets/fonts.css')
+  body
+    #wrapper
+      #header-wrapper
+        #header.container
+          #logo
+            h1
+              a(href='/') ForS
+            h1#two
+              a(href='/') 2
+            h1#four
+              a(href='/') 4
+      #menu-wrapper
+        #menu.container
+          ul
+            li
+              a(href='/event') 행사상품
+            li
+              a(href='/price') 장바구니
+            li
+              a(href='/search') 편의점 위치
+            li
+              a(href='/explain') 홈페이지 설명
+    #eventBanner1
+      ul
+        li 
+          a(href='/event/emart') 이마트에브리데이
+        li
+          a(href='/event/GS25') GS25
+        li
+          a(href='/event/seveneleven') 세븐일레븐
+
+    #eventBanner2
+      ul
+        li
+          a(href='/event/1' onclick="var currentEvent = `#{currentEvent}`; currentEvent = 1; " ) 1+1
+        li 
+          a(href='/event/2' onclick="var currentEvent = `#{currentEvent}`; currentEvent = 2; ") 2+1
+        li 
+          a(href='/event/0' onclick="var currentEvent = `#{currentEvent}`; currentEvent = 0; ") 덤증정
+    div
+      #productCategory
+      ul
+        each p in prod 
+          li.total
+            <img src=  #{p.p_image}>
+            p.productName #{p.p_name} 
+            p.productPrice #{p.p_price} 
+

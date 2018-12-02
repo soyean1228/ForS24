@@ -1,0 +1,9 @@
+db.carts.insert([
+    {
+        "cart_name": "GS25",
+        "cart_price": 0,
+        "discount_price": 0,
+        "id": "b",
+        "product": [ {"name" : "FRESH)마시는생코코넛", "num" : 3 }, {"name" : "아띠)도라에몽와퍼스틱(바닐라)", "num" : 4 }]
+     }
+])
