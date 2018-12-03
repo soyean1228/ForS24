@@ -85,7 +85,7 @@ router.post('/:id/:cid' , async( req , res , next) => {
     })
     await new_cart.save(); 
   }
-  var prod = await Product.find({"p_brand" : currentBrand, "p_event" : currentEvent})
+  var prod = await Product.find({"p_brand" : currentBrand})
   res.render('price',{ prod : prod});
 
 }else{
