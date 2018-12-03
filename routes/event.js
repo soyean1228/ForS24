@@ -17,7 +17,7 @@ router.get('/', async(req, res, next)=> {
   var prod = await Product.find({"p_brand" : "emart", "p_event" : 1})
   console.log(prod);
   console.log(currentEvent,currentBrand);
-  //res.render('event',{ prod : prod ,currentEvent :currentEvent});
+  res.render('event',{ prod : prod ,currentEvent :currentEvent});
 });
 
 
