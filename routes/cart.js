@@ -102,8 +102,11 @@ router.get('/', async(req, res, next)=> {
     //var cartProduct_seveneleven = await cartProduct.find({});
 
     res.render('cart',{ prod_gs : cartProduct_gs , prod_emart : cartProduct_emart, prod_seveneleven: cartProduct_seveneleven, 
-      total_price_gs : total_price_gs, total_price_emart : total_price_emart, total_price_eleven : total_price_eleven});
+      total_price_gs : total_price_gs, total_price_emart : total_price_emart, total_price_eleven : total_price_eleven, discount_eleven : cart_seveneleven.discount_price, discount_emart : cart_emart.discount_price, discount_gs : cart_gs.discount_price});
     console.log(total_price);
+    cartProduct_seveneleven.update({discount_price : 0});
+    cartProduct_gs.update({discount_price : 0});
+    cartProduct_emart.update({discount_price : 0});
   }else{
     res.send('<script type="text/javascript">alert("로그인이 필요한 페이지입니다"); document.location.href = "/"; </script>');
   }
@@ -120,8 +123,7 @@ router.post('/:id', async(req, res, next)=>{
     }
     //res.render('cart',{discount_emart: discount_emart});
     cart_e.update({discount_price : discount_emart});
-    res.render('cart',{discount_emart: cart_e.discount_price});
-    res.redirect('/cart');
+    //res.redirect('/cart');
   }else if(req.params.id == "sale_gs")
     {
       var cart_g = await Cart.findOne({"cart_name": "GS25", "id" :req.user.uid});
