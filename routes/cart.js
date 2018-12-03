@@ -9,9 +9,9 @@ const cartProduct = require('../models/cart_product')
 /* GET home page. */
 
 router.get('/', async(req, res, next)=> {
-  // discount_eleven = 0;
-  // discount_emart=0;
-  // discount_gs=0
+  discount_eleven = 0;
+  discount_emart=0;
+  discount_gs=0
   if (req.user){
     var currentId = req.user.uid //현재 로그인 중인 id 
     //gs25카트 
