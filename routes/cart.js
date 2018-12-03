@@ -9,9 +9,9 @@ const cartProduct = require('../models/cart_product')
 /* GET home page. */
 
 router.get('/', async(req, res, next)=> {
-  discount_eleven = 0;
-  discount_emart=0;
-  discount_gs=0
+  // discount_eleven = 0;
+  // discount_emart=0;
+  // discount_gs=0
   if (req.user){
     var currentId = req.user.uid //현재 로그인 중인 id 
     //gs25카트 
@@ -105,7 +105,7 @@ router.get('/', async(req, res, next)=> {
     //var cartProduct_seveneleven = await cartProduct.find({});
 
     res.render('cart',{ prod_gs : cartProduct_gs , prod_emart : cartProduct_emart, prod_seveneleven: cartProduct_seveneleven, 
-      total_price_gs : total_price_gs, total_price_emart : total_price_emart, total_price_eleven : total_price_eleven,discount_eleven : 0,discount_emart:0,discount_gs:0});
+      total_price_gs : total_price_gs, total_price_emart : total_price_emart, total_price_eleven : total_price_eleven});
     console.log(total_price);
   }else{
     res.send('<script type="text/javascript">alert("로그인이 필요한 페이지입니다"); document.location.href = "/"; </script>');
@@ -214,14 +214,14 @@ router.post('/:id/:cid', async(req, res, next)=>{
   }
 
   if(currentBrand == "GS25"){
-    res.render('cart',{prod_gs : delete_cart_prod});
-    res.redirect('/cart');
+    res.render('cart',{prod_gs : delete_cart_prod });
+    //res.redirect('/cart');
   }else if(currentBrand == "emart" ){
     res.render('cart', {prod_emart : delete_cart_prod })
-    res.redirect('/cart');
+    //res.redirect('/cart');
   }else if(currentBrand == "seveneleven" ){
     res.render('cart', {prod_seveneleven : delete_cart_prod })
-    res.redirect('/cart');
+    //res.redirect('/cart');
   }
 });
 
