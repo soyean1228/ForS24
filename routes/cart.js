@@ -9,6 +9,9 @@ const cartProduct = require('../models/cart_product')
 /* GET home page. */
 
 router.get('/', async(req, res, next)=> {
+  discount_eleven = 0;
+  discount_emart=0;
+  discount_gs=0
   if (req.user){
     var currentId = req.user.uid //현재 로그인 중인 id 
     //gs25카트 
@@ -102,7 +105,7 @@ router.get('/', async(req, res, next)=> {
     //var cartProduct_seveneleven = await cartProduct.find({});
 
     res.render('cart',{ prod_gs : cartProduct_gs , prod_emart : cartProduct_emart, prod_seveneleven: cartProduct_seveneleven, 
-      total_price_gs : total_price_gs, total_price_emart : total_price_emart, total_price_eleven : total_price_eleven });
+      total_price_gs : total_price_gs, total_price_emart : total_price_emart, total_price_eleven : total_price_eleven,discount_eleven : 0,discount_emart:0,discount_gs:0});
     console.log(total_price);
   }else{
     res.send('<script type="text/javascript">alert("로그인이 필요한 페이지입니다"); document.location.href = "/"; </script>');
@@ -199,7 +202,9 @@ router.post('/:id/:cid', async(req, res, next)=>{
     console.log(key);
     if(delete_cart.product[key].name==d_prod){
       console.log("============(상품삭제)===================");
-    //  var a = JSON.stringify(delete_cart.product.splice(key,2));
+      // var a = JSON.stringify(delete_cart.product.splice(key,2));
+      // var d_w = parseInt(delete_cart.product[key].cart_price.split('원')[0].split(',')[0].concat(product.p_price.split('원')[0].split(',')[1]));
+      // delete_cart.cart_price = delete_cart.cart_price + (d_w * prod_seveneleven[i].num);
       delete_cart.product.splice(key,1);
       var delete_prodstr = JSON.stringify(delete_cart.product);
       console.log(delete_prodstr);
