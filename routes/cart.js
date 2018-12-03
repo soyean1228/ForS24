@@ -9,9 +9,6 @@ const cartProduct = require('../models/cart_product')
 /* GET home page. */
 
 router.get('/', async(req, res, next)=> {
-  discount_eleven = 0;
-  discount_emart=0;
-  discount_gs=0
   if (req.user){
     var currentId = req.user.uid //현재 로그인 중인 id 
     //gs25카트 
@@ -122,8 +119,10 @@ router.post('/:id', async(req, res, next)=>{
       // console.log(discount_emart);
     }
     //res.render('cart',{discount_emart: discount_emart});
+    cart_e.update({discount_price : discount_emart});
+    res.render('cart',{discount_emart: cart_e.discount_price});
     res.redirect('/cart');
-    }else if(req.params.id == "sale_gs")
+  }else if(req.params.id == "sale_gs")
     {
       var cart_g = await Cart.findOne({"cart_name": "GS25", "id" :req.user.uid});
       console.log(req.body);
@@ -145,7 +144,7 @@ router.post('/:id', async(req, res, next)=>{
         discount_gs = discount_gs - discount_gs*0.15;
       }
       //res.render('cart',{discount_gs: discount_gs});
-    }else if(req.params.id == "sale_eleven")
+  }else if(req.params.id == "sale_eleven")
     {
       var cart_s = await Cart.findOne({"cart_name": "seveneleven", "id" :req.user.uid});
       console.log(cart_s);
