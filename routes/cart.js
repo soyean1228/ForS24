@@ -123,6 +123,9 @@ router.get('/', async(req, res, next)=> {
      res.render('cart',{ prod_gs : cartProduct_gs , prod_emart : cartProduct_emart, prod_seveneleven: cartProduct_seveneleven, 
       total_price_gs : total_price_gs, total_price_emart : total_price_emart, total_price_eleven : total_price_eleven, 
       discount_eleven : d_eleven, discount_emart : d_emart, discount_gs : d_gs});
+    await cart_seveneleven.update({ discount_price : 0 }) 
+    await cart_emart.update({ discount_price : 0 }) 
+    await cart_gs.update({ discount_price : 0 }) 
   }else{
     res.send('<script type="text/javascript">alert("로그인이 필요한 페이지입니다"); document.location.href = "/"; </script>');
   }
@@ -178,8 +181,8 @@ router.post('/:id', async(req, res, next)=>{
         discount_eleven = discount_eleven - discount_eleven*0.1;
       }
       await cart_s.update({ discount_price : discount_eleven });
-      console.log('업데이트 했어요!');
-      console.log(cart_s.discount_price);
+      // console.log('업데이트 했어요!');
+      // console.log(cart_s.discount_price);
     }
     res.redirect('/cart');
   });  
