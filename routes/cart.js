@@ -9,6 +9,9 @@ const cartProduct = require('../models/cart_product')
 /* GET home page. */
 
 router.get('/', async(req, res, next)=> {
+  var d_eleven;
+  var d_emart;
+  var d_gs;
   if (req.user){
     var currentId = req.user.uid //현재 로그인 중인 id 
     //gs25카트 
@@ -36,11 +39,15 @@ router.get('/', async(req, res, next)=> {
         await p.save();
         console.log(total_price_gs);
         await cart_gs.update({cart_price: total_price_gs});
+        if(cart_gs.discount_price){
+          d_gs = cart_gs.discount_price;
+        }else{ d_gs =0 ;}
       }
       var cartProduct_gs= await cartProduct.find({});
       }else{
         //await cart_gs.update({cart_price: total_price_gs});
         cartProduct_gs = 0;
+        d_gs = 0 ;
       }
 
     //emart카트  
@@ -64,11 +71,16 @@ router.get('/', async(req, res, next)=> {
       var w = parseInt(product.p_price.split('원')[0].split(',')[0].concat(product.p_price.split('원')[0].split(',')[1]));
       total_price_emart = total_price_emart + (w * prod_emart[i].num);
       await p.save();
-      await cart_emart.update({cart_price: total_price_emart});
+      await cart_emart.update({cart_price: total_price_emart}); 
+      if(cart_emart.discount_price){
+        d_emart = cart_emart.discount_price;
+      }else{ d_emart =0 ;}
+  
     }
     var cartProduct_emart = await cartProduct.find({});
     }else{
       cartProduct_emart = 0;
+      d_emart = 0;
     }
     //va
     //seveneleven카트 
@@ -93,20 +105,24 @@ router.get('/', async(req, res, next)=> {
         total_price_eleven = total_price_eleven + (w * prod_seveneleven[i].num);
       await p.save();
       await cart_seveneleven.update({cart_price: total_price_eleven});
+      if(cart_seveneleven.discount_price){
+        d_eleven = cart_seveneleven.discount_price;
+      }else{ d_eleven =0 ;}
     }
     var cartProduct_seveneleven = await cartProduct.find({});
     console.log(cartProduct_seveneleven);
     }else{
       cartProduct_seveneleven = 0;
+      d_eleven = 0;
     }
     //var cartProduct_seveneleven = await cartProduct.find({});
 
-    res.render('cart',{ prod_gs : cartProduct_gs , prod_emart : cartProduct_emart, prod_seveneleven: cartProduct_seveneleven, 
-      total_price_gs : total_price_gs, total_price_emart : total_price_emart, total_price_eleven : total_price_eleven, discount_eleven : cart_seveneleven.discount_price, discount_emart : cart_emart.discount_price, discount_gs : cart_gs.discount_price});
-    console.log(total_price);
-    //cartProduct_seveneleven.update({discount_price : 0});
-    //cartProduct_gs.update({discount_price : 0});
-    //cartProduct_emart.update({discount_price : 0});
+    // res.render('cart',{ prod_gs : cartProduct_gs , prod_emart : cartProduct_emart, prod_seveneleven: cartProduct_seveneleven, 
+    //   total_price_gs : total_price_gs, total_price_emart : total_price_emart, total_price_eleven : total_price_eleven });
+    // console.log(total_price);
+     res.render('cart',{ prod_gs : cartProduct_gs , prod_emart : cartProduct_emart, prod_seveneleven: cartProduct_seveneleven, 
+      total_price_gs : total_price_gs, total_price_emart : total_price_emart, total_price_eleven : total_price_eleven, 
+      discount_eleven : d_eleven, discount_emart : d_emart, discount_gs : d_gs});
   }else{
     res.send('<script type="text/javascript">alert("로그인이 필요한 페이지입니다"); document.location.href = "/"; </script>');
   }
@@ -115,24 +131,21 @@ router.get('/', async(req, res, next)=> {
 router.post('/:id', async(req, res, next)=>{
   if(req.params.id == "sale_emart"){
     var cart_e = await Cart.findOne({"cart_name": "emart","id" :req.user.uid});
-    discount_emart = cart_e.cart_price;
+    var discount_emart = cart_e.cart_price;
     //membership discount
     if(req.body.membership == 'kt'){
       discount_emart = discount_emart - discount_emart*0.1;
-      // console.log(discount_emart);
     }
-    //res.render('cart',{discount_emart: discount_emart});
-    cart_e.update({discount_price : discount_emart});
-    //res.redirect('/cart');
-  }else if(req.params.id == "sale_gs")
+    await cart_e.update({discount_price : discount_emart});
+    res.redirect('/cart');
+    }else if(req.params.id == "sale_gs")
     {
       var cart_g = await Cart.findOne({"cart_name": "GS25", "id" :req.user.uid});
       console.log(req.body);
-      discount_gs = cart_g.cart_price;
+      var discount_gs = cart_g.cart_price;
       //membership discount
       if(req.body.membership == 'lg' || req.body.membership == 'u+' || req.body.membership == 'kt'){
         discount_gs = discount_gs - discount_gs*0.1;
-        //res.render('cart',{discount_gs: discount_gs});
       }
       //card discount
       if(req.body.card == 'Mr.Life')
@@ -145,19 +158,16 @@ router.post('/:id', async(req, res, next)=>{
       }else if(req.body.card == 'happy'){
         discount_gs = discount_gs - discount_gs*0.15;
       }
-      cart_g.update({discount_price : discount_gs});
-      //res.render('cart',{discount_gs: discount_gs});
-  }else if(req.params.id == "sale_eleven")
+      await cart_g.update({discount_price : discount_gs});
+    }else if(req.params.id == "sale_eleven")
     {
       var cart_s = await Cart.findOne({"cart_name": "seveneleven", "id" :req.user.uid});
       console.log(cart_s);
-      discount_eleven = cart_s.cart_price;
-      console.log(cart_s.cart_price);
+      var discount_eleven = cart_s.cart_price;
       //membership discount
       if(req.body.membership == 't'){
         var i = discount_eleven/1000;
         discount_eleven = discount_eleven - 50*i;
-        //res.render('cart',{discount_eleven: discount_eleven});
       }
       //card discount
       if(req.body.card == 'Mr.Life'){
@@ -167,8 +177,9 @@ router.post('/:id', async(req, res, next)=>{
       }else if(req.body.card == 'seven_lotte'){
         discount_eleven = discount_eleven - discount_eleven*0.1;
       }
-      //res.render('cart',{discount_eleven: discount_eleven});
-      cart_s.update({discount_price : discount_eleven});
+      await cart_s.update({ discount_price : discount_eleven });
+      console.log('업데이트 했어요!');
+      console.log(cart_s.discount_price);
     }
     res.redirect('/cart');
   });  
@@ -198,14 +209,14 @@ router.post('/:id/:cid', async(req, res, next)=>{
   //console.log("============이게뭘까용=================");
   //var c = JSON.stringify(delete_cart.product);
   //console.log(c);
-  console.log("============삭제해야할 상품이 뭔가요~~?=================");
-  console.log(d_prod);
+  //console.log("============삭제해야할 상품이 뭔가요~~?=================");
+  //console.log(d_prod);
   for(var key in delete_cart.product){
     console.log("============(key값 출력)===================");
     console.log(key);
     if(delete_cart.product[key].name==d_prod){
       console.log("============(상품삭제)===================");
-      // var a = JSON.stringify(delete_cart.product.splice(key,2));
+    //  var a = JSON.stringify(delete_cart.product.splice(key,2));
       delete_cart.product.splice(key,1);
       var delete_prodstr = JSON.stringify(delete_cart.product);
       console.log(delete_prodstr);
@@ -215,7 +226,7 @@ router.post('/:id/:cid', async(req, res, next)=>{
   }
 
   if(currentBrand == "GS25"){
-    res.render('cart',{prod_gs : delete_cart_prod });
+    res.render('cart',{prod_gs : delete_cart_prod});
     res.redirect('/cart');
   }else if(currentBrand == "emart" ){
     res.render('cart', {prod_emart : delete_cart_prod })
