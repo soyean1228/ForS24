@@ -215,13 +215,13 @@ router.post('/:id/:cid', async(req, res, next)=>{
 
   if(currentBrand == "GS25"){
     res.render('cart',{prod_gs : delete_cart_prod });
-    //res.redirect('/cart');
+    res.redirect('/cart');
   }else if(currentBrand == "emart" ){
     res.render('cart', {prod_emart : delete_cart_prod })
-    //res.redirect('/cart');
+    res.redirect('/cart');
   }else if(currentBrand == "seveneleven" ){
     res.render('cart', {prod_seveneleven : delete_cart_prod })
-    //res.redirect('/cart');
+    res.redirect('/cart');
   }
 });
 
