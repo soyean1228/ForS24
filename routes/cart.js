@@ -104,9 +104,9 @@ router.get('/', async(req, res, next)=> {
     res.render('cart',{ prod_gs : cartProduct_gs , prod_emart : cartProduct_emart, prod_seveneleven: cartProduct_seveneleven, 
       total_price_gs : total_price_gs, total_price_emart : total_price_emart, total_price_eleven : total_price_eleven, discount_eleven : cart_seveneleven.discount_price, discount_emart : cart_emart.discount_price, discount_gs : cart_gs.discount_price});
     console.log(total_price);
-    cartProduct_seveneleven.update({discount_price : 0});
-    cartProduct_gs.update({discount_price : 0});
-    cartProduct_emart.update({discount_price : 0});
+    //cartProduct_seveneleven.update({discount_price : 0});
+    //cartProduct_gs.update({discount_price : 0});
+    //cartProduct_emart.update({discount_price : 0});
   }else{
     res.send('<script type="text/javascript">alert("로그인이 필요한 페이지입니다"); document.location.href = "/"; </script>');
   }
@@ -145,6 +145,7 @@ router.post('/:id', async(req, res, next)=>{
       }else if(req.body.card == 'happy'){
         discount_gs = discount_gs - discount_gs*0.15;
       }
+      cart_g.update({discount_price : discount_gs});
       //res.render('cart',{discount_gs: discount_gs});
   }else if(req.params.id == "sale_eleven")
     {
@@ -167,6 +168,7 @@ router.post('/:id', async(req, res, next)=>{
         discount_eleven = discount_eleven - discount_eleven*0.1;
       }
       //res.render('cart',{discount_eleven: discount_eleven});
+      cart_s.update({discount_price : discount_eleven});
     }
     res.redirect('/cart');
   });  
@@ -204,8 +206,6 @@ router.post('/:id/:cid', async(req, res, next)=>{
     if(delete_cart.product[key].name==d_prod){
       console.log("============(상품삭제)===================");
       // var a = JSON.stringify(delete_cart.product.splice(key,2));
-      // var d_w = parseInt(delete_cart.product[key].cart_price.split('원')[0].split(',')[0].concat(product.p_price.split('원')[0].split(',')[1]));
-      // delete_cart.cart_price = delete_cart.cart_price + (d_w * prod_seveneleven[i].num);
       delete_cart.product.splice(key,1);
       var delete_prodstr = JSON.stringify(delete_cart.product);
       console.log(delete_prodstr);
