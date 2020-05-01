@@ -29,8 +29,13 @@ app.set('view engine', 'pug');
 
 // // mongodb connect
 mongoose.Promise = global.Promise; // ES6 Native Promise를 mongoose에서 사용한다.
-const connStr = 'mongodb://fors:fors1234@ds157971.mlab.com:57971/fors';
-mongoose.connect(connStr, { useNewUrlParser: true });
+//const connStr = 'mongodb://fors:fors1234@ds157971.mlab.com:57971/fors';
+//const connStr = 'mongodb+srv://fors:fors1234@fors-w4ksk.mongodb.net/fors';
+//mongoose.connect(connStr, { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://fors:fors1234@fors-w4ksk.mongodb.net/fors', {
+  useNewUrlParser: true
+});
+
 mongoose.connection.on('error', console.error);
 
 
